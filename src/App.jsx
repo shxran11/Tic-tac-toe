@@ -1,35 +1,38 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import './styles.scss';
+import { useState } from 'react';
+import Board from './components/Board';
+import StatusMessage from './components/StatusMessage';
+import { calculateWinner } from './Winner';
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [squares, setSquares] = useState(Array(9).fill(null));
+  const [isXNext, setIsXNext] = useState(false);
 
+  const winner = calculateWinner(squares);
+
+  const handleSquareClick = clickedPosition => {
+    if (squares[clickedPosition] || winner) {
+      return;
+    }
+
+    setSquares(currentSquares => {
+      return currentSquares.map((squareValue, position) => {
+        if (clickedPosition === position) {
+          return isXNext ? 'X' : 'O';
+        }
+
+        return squareValue;
+      });
+    });
+
+    setIsXNext(currentIsXNext => !currentIsXNext);
+  };
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <div className="app">
+      <StatusMessage winner={winner} isXNext={isXNext} squares={squares} />
+      <Board squares={squares} handleSquareClick={handleSquareClick} />
+    </div>
+  );
 }
 
-export default App
+export default App;
