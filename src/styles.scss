@@ -4,10 +4,10 @@ $blue: #4c43d4;
 
 body {
   font-family: 'Roboto', sans-serif;
-  background-color: $blue;
+  background-color: #c484e1;
   color: #fff;
-  padding: 0;
-  margin: 0;
+  padding: 100;
+  margin: 100;
 }
 
 button {
@@ -32,6 +32,10 @@ button {
 
 .text-orange {
   color: $orange;
+}
+
+.text-yellow {
+  color: #e1e333;
 }
 
 .history-wrapper {
@@ -68,7 +72,7 @@ button {
 }
 
 .status-message {
-  margin-bottom: 30px;
+  margin-bottom: 10px;
   font-size: 1.2rem;
   font-weight: lighter;
   span {

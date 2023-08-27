@@ -1,23 +1,41 @@
 /* eslint-disable react/prop-types */
-const StatusMessage = ({ winner, isXNext, squares }) => {
+const StatusMessage = ({ winner, gamingBoard }) => {
+  const { squares, isXNext } = gamingBoard;
+
   const noMovesLeft = squares.every(squareValue => squareValue !== null);
-  const nextPlayer = isXNext ? 'X' : 'O';
+  const nextPlayer = gamingBoard.isXNext ? 'X' : 'O';
 
   const renderStatusMessage = () => {
     if (winner) {
-      return <div>Winner is {winner}</div>;
+      return (
+        <>
+          <span className="text-yellow">Winner is {winner}</span>
+        </>
+      );
     }
     if (!winner && noMovesLeft) {
-      return <div>It is a draw</div>;
+      return (
+        <div>
+          <span className="text-orange">O</span> and{' '}
+          <span className="text-green">X</span> tied
+        </div>
+      );
     }
     if (!winner && !noMovesLeft) {
-      return <div>Next player is {nextPlayer}</div>;
+      return (
+        <>
+          Next player is{' '}
+          <span className={isXNext ? 'text-green' : 'text-orange'}>
+            {nextPlayer}
+          </span>
+        </>
+      );
     }
 
     return null;
   };
 
-  return <div>{renderStatusMessage()}</div>;
+  return <h2 className="status-message">{renderStatusMessage()}</h2>;
 };
 
 export default StatusMessage;
